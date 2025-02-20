@@ -1,8 +1,8 @@
 package ru.yandex.practicum.model.hub;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import ru.yandex.practicum.enums.HubEventType;
@@ -17,12 +17,12 @@ import static ru.yandex.practicum.enums.HubEventType.SCENARIO_ADDED;
 public class ScenarioAddedEvent extends ScenarioEvent {
 
 
-    @NonNull
+    @NotNull
     @Size(min = 1)
-    List<DeviceAction> actions;
-    @NonNull
+    private List<DeviceAction> actions;
+    @NotNull
     @Size(min = 1)
-    List<ScenarioCondition> conditions;
+    private List<ScenarioCondition> conditions;
 
     public HubEventType getType() {
         return SCENARIO_ADDED;
