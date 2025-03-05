@@ -1,12 +1,8 @@
 spring:
-  application:
-    name: aggregator
-  config:
-    import: configserver:http://localhost:8888
-
-cloud:
-  config:
-    fail-fast: true
-    retry:
-      useRandomPolicy: true
-      max-interval: 6000
+  kafka:
+    bootstrap-servers: localhost:9092
+    group:
+      id: aggregator
+    topic:
+      in: telemetry.sensors.v1
+      out: telemetry.snapshots.v1
