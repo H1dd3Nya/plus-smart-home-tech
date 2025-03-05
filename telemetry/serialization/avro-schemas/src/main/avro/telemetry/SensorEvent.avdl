@@ -1,44 +1,53 @@
 @namespace("ru.yandex.practicum.kafka.telemetry.event")
 protocol SensorEventProtocol {
 
-    record ClimateSensorAvro{
-        int temperature_c;
-        int humidity;
-        int co2_level;
-    }
+	// Запись для данных климатического датчика
+	record ClimateSensorAvro {
+		int temperature_c;  // температура в градусах Цельсия
+		int humidity;       // влажность
+		int co2_level;      // уровень углекислого газа
+	}
 
-    record LightSensorAvro{
-        int link_quality;
-        int luminosity;
-    }
+	// Запись для данных с датчика света
+	record LightSensorAvro {
+		int link_quality;   // качество сигнала связи
+		int luminosity;     // уровень освещенности
+	}
 
-    record MotionSensorAvro{
-        int link_quality;
-        boolean motion;
-        int voltage;
-    }
+	// Запись для данных с датчика движения
+	record MotionSensorAvro {
+		int link_quality;   // качество сигнала связи
+		boolean motion;     // обнаружено ли движение
+		int voltage;        // уровень напряжения
+	}
 
-    record SwitchSensorAvro{
-        boolean state;
-    }
+	// Запись для данных с датчика переключателя
+	record SwitchSensorAvro {
+		boolean state;      // состояние переключателя (включено/выключено)
+	}
 
-    record TemperatureSensorAvro{
-        int temperature_c;
-        int temperature_f;
-    }
+	// Запись для данных с датчика температуры
+	record TemperatureSensorAvro {
+		string id;
+		string hubId;
+		timestamp_ms timestamp;
+		int temperature_c;  // температура в градусах Цельсия
+		int temperature_f;  // температура в градусах Фаренгейта
+	}
 
-    record SensorEventAvro{
-        string id;
-        string hubId;
-        timestamp_ms timestamp;
+	// Главная запись для события сенсора, которая может включать разные типы сенсоров
+	record SensorEventAvro {
+		string id;            // уникальный идентификатор сенсора
+		string hubId;         // идентификатор хаба, к которому подключён сенсор
+		timestamp_ms timestamp;       // метка времени события
 
-        union {
-            ClimateSensorAvro,
-            LightSensorAvro,
-            MotionSensorAvro,
-            SwitchSensorAvro,
-            TemperatureSensorAvro
-            } payload;
-    }
-
+		// Union, чтобы указать, что в payload может быть один из типов сенсоров
+		union {
+			ClimateSensorAvro,  // данные с климатического датчика
+			LightSensorAvro,    // данные с датчика света
+			MotionSensorAvro,   // данные с датчика движения
+			SwitchSensorAvro,   // данные с датчика переключателя
+			TemperatureSensorAvro // данные с датчика температуры
+		} payload;
+	}
 }
