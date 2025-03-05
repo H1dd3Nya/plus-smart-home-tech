@@ -22,10 +22,10 @@ spring:
     init:
       mode: always
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/analyzer
-    username: user
-    password: pass
+    driverClassName: "org.postgresql.Driver"
+    url: "jdbc:postgresql://localhost:5433/analyzer"
+    username: "analyzer"
+    password: "analyzer"
 grpc:
   client:
     hub-router:
