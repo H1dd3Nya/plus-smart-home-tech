@@ -2,12 +2,20 @@ services:
   analyzer-db:
     image: postgres:16.1
     container_name: postgres-analyzer
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=analyzer
-      - POSTGRES_USER=analyzer
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_USER=user
       - POSTGRES_DB=analyzer
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
 
   kafka:
     image: confluentinc/confluent-local:7.4.3

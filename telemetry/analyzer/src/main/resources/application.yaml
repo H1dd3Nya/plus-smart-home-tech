@@ -24,8 +24,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/analyzer
-    username: analyzer
-    password: analyzer
+    username: user
+    password: pass
 grpc:
   client:
     hub-router:
