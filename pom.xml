@@ -21,7 +21,6 @@
         <module>commerce</module>
         <module>telemetry/aggregator</module>
         <module>telemetry/analyzer</module>
-        <module>telemetry/analyzer</module>
     </modules>
 
     <properties>
