@@ -1,55 +1,53 @@
 package ru.yandex.practicum.config.kafka;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.experimental.FieldDefaults;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
-import ru.yandex.practicum.serialization.HubDeserializer;
-import ru.yandex.practicum.serialization.SnapshotDeserializer;
 
 import java.util.Properties;
 
+@Getter
 @Configuration
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@EnableConfigurationProperties({KafkaConfigProperties.class})
 public class KafkaConfig {
-    @Value("${spring.kafka.bootstrapServer}")
-    String bootstrapServer;
-    @Value("${spring.kafka.snapshot.group.id}")
-    String snapchotGroupId;
-    @Getter
-    @Value("${spring.kafka.snapshot.topic.in}")
-    String snapshotTopicIn;
+    private final KafkaConfigProperties kafkaProperties;
 
-    @Value("${spring.kafka.hub.group.id}")
-    String hubGroupId;
-    @Getter
-    @Value("${spring.kafka.hub.topic.in}")
-    String hubTopicIn;
-
-    @Bean
-    public KafkaConsumer<String, SensorsSnapshotAvro> getSnapshotConsumer() {
-        Properties configProps = new Properties();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, snapchotGroupId);
-        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SnapshotDeserializer.class);
-        return new KafkaConsumer<>(configProps);
+    public KafkaConfig(KafkaConfigProperties properties) {
+        this.kafkaProperties = properties;
     }
 
     @Bean
-    public KafkaConsumer<String, HubEventAvro> getHubConsumer() {
-        Properties configProps = new Properties();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, hubGroupId);
-        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, HubDeserializer.class);
-        return new KafkaConsumer<>(configProps);
+    public KafkaConsumer<String, SensorsSnapshotAvro> getSensorsSnapshotConsumer() {
+        Properties props = new Properties();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getSnapshotConsumer().getGroupId());
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, kafkaProperties.getSnapshotConsumer().getClientId());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                kafkaProperties.getSnapshotConsumer().getKeyDeserializer());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                kafkaProperties.getSnapshotConsumer().getValueDeserializer());
+        props.put("enable.auto.commit", "true");
+        props.put("auto.commit.interval.ms", "1000");
+        return new KafkaConsumer<>(props);
+    }
+
+    @Bean
+    public KafkaConsumer<String, HubEventAvro> getHubEventConsumer() {
+        Properties props = new Properties();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getHubConsumer().getGroupId());
+        props.put(ConsumerConfig.CLIENT_ID_CONFIG, kafkaProperties.getHubConsumer().getClientId());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                kafkaProperties.getHubConsumer().getKeyDeserializer());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                kafkaProperties.getHubConsumer().getValueDeserializer());
+        props.put("enable.auto.commit", "true");
+        props.put("auto.commit.interval.ms", "1000");
+        return new KafkaConsumer<>(props);
     }
 }

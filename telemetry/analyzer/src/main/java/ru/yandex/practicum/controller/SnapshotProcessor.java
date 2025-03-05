@@ -25,7 +25,7 @@ public class SnapshotProcessor {
 
     public void start() {
         try {
-            consumer.subscribe(List.of(config.getSnapshotTopicIn()));
+            consumer.subscribe(List.of(config.getKafkaProperties().getSensorSnapshotsTopic()));
             while (true) {
                 ConsumerRecords<String, SensorsSnapshotAvro> records = consumer.poll(Duration.ofMillis(1000));
                 if (records.isEmpty()) continue;

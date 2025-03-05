@@ -26,7 +26,7 @@ public class HubEventProcessor implements Runnable {
     @Override
     public void run() {
         try {
-            consumer.subscribe(List.of(config.getHubTopicIn()));
+            consumer.subscribe(List.of(config.getKafkaProperties().getHubEventsTopic()));
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
             while (true) {
                 ConsumerRecords<String, HubEventAvro> records =
