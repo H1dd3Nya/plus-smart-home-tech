@@ -2,27 +2,31 @@ package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.yandex.practicum.model.type.ActionType;
-
-import java.util.List;
+import ru.yandex.practicum.kafka.telemetry.event.ActionTypeAvro;
 
 @Entity
 @Table(name = "actions")
-@Data
-@Builder(toBuilder = true)
-@NoArgsConstructor
+@SecondaryTable(name = "scenario_actions", pkJoinColumns = @PrimaryKeyJoinColumn(name = "action_id"))
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ActionType type;
+    private ActionTypeAvro type;
 
     private Integer value;
 
-    @OneToMany(mappedBy = "action")
-    @ToString.Exclude
-    private List<ScenarioAction> scenarioActions;
+    @ManyToOne
+    @JoinColumn(name = "scenario_id", table = "scenario_actions")
+    private Scenario scenario;
+
+    @ManyToOne
+    @JoinColumn(name = "sensor_id", table = "scenario_actions")
+    private Sensor sensor;
 }

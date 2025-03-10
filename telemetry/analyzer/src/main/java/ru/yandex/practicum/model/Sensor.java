@@ -1,30 +1,24 @@
 package ru.yandex.practicum.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-
-import java.util.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "sensors")
-@Data
-@Builder(toBuilder = true)
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "sensors")
+@Builder
 public class Sensor {
     @Id
     private String id;
 
-    @NotBlank
     @Column(name = "hub_id")
     private String hubId;
-
-    @OneToMany(mappedBy = "sensor", fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private Set<ScenarioCondition> scenarioConditions;
-
-    @OneToMany(mappedBy = "sensor", fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private Set<ScenarioAction> scenarioActions;
 }

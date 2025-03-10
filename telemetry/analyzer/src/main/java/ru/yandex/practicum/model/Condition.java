@@ -2,31 +2,35 @@ package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.yandex.practicum.model.type.ConditionOperation;
-import ru.yandex.practicum.model.type.ConditionType;
-
-import java.util.List;
+import ru.yandex.practicum.kafka.telemetry.event.ConditionOperationAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ConditionTypeAvro;
 
 @Entity
 @Table(name = "conditions")
-@Data
-@Builder(toBuilder = true)
-@NoArgsConstructor
+@SecondaryTable(name = "scenario_conditions", pkJoinColumns = @PrimaryKeyJoinColumn(name = "condition_id"))
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Condition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ConditionType type;
+    private ConditionTypeAvro type;
 
     @Enumerated(EnumType.STRING)
-    private ConditionOperation operation;
+    private ConditionOperationAvro operation;
 
     private Integer value;
 
-    @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
-    @ToString.Exclude
-    private List<ScenarioCondition> scenarioConditions;
+    @ManyToOne
+    @JoinColumn(name = "scenario_id", table = "scenario_conditions")
+    private Scenario scenario;
+
+    @ManyToOne
+    @JoinColumn(name = "sensor_id", table = "scenario_conditions")
+    private Sensor sensor;
 }
