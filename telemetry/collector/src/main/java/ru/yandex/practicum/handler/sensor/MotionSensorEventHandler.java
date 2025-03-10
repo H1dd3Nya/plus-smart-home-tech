@@ -25,7 +25,7 @@ public class MotionSensorEventHandler extends SensorEventHandler<MotionSensorAvr
                     .setVoltage(motionSensor.getVoltage())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain motion sensor data");
+            throw new IllegalArgumentException("Событие не содержит данных о датчике движения.");
         }
     }
 }

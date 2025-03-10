@@ -30,7 +30,7 @@ public class ScenarioAddedEventHandler extends HubEventHandler<ScenarioAddedEven
                     .setActions(mapActions(scenarioAddedEvent.getActionList()))
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain scenario added data");
+            throw new IllegalArgumentException("Событие не содержит данных о добавленном сценарии.");
         }
     }
 

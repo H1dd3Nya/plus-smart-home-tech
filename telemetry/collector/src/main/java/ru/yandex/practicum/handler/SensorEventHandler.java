@@ -9,10 +9,10 @@ import ru.yandex.practicum.kafka.KafkaEventProducer;
 @RequiredArgsConstructor
 public abstract class SensorEventHandler<T extends SpecificRecordBase> {
 
-    private static final String SENSOR_TOPIC = "telemetry.sensors.v1";
     private final KafkaConfig kafkaConfig;
     private final KafkaEventProducer kafkaEventProducer;
-    private final SensorEventProto.PayloadCase eventType; // Тип события
+    private static final String SENSOR_TOPIC = "telemetry.sensors.v1";
+    private final SensorEventProto.PayloadCase eventType;
 
     public void handle(SensorEventProto event) {
         T avroEvent = mapToAvro(event);
@@ -26,6 +26,6 @@ public abstract class SensorEventHandler<T extends SpecificRecordBase> {
     }
 
     public SensorEventProto.PayloadCase getEventType() {
-        return eventType; // Вернёт тип события
+        return eventType;
     }
 }

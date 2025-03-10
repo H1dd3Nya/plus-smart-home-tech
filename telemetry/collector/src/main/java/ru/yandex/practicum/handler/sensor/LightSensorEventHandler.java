@@ -24,7 +24,7 @@ public class LightSensorEventHandler extends SensorEventHandler<LightSensorAvro>
                     .setLuminosity(lightSensor.getLuminosity())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain light sensor data");
+            throw new IllegalArgumentException("Событие не содержит данных о световом датчике.");
         }
     }
 }

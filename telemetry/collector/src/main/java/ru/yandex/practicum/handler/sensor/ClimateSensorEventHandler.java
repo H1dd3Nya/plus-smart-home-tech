@@ -25,7 +25,7 @@ public class ClimateSensorEventHandler extends SensorEventHandler<ClimateSensorA
                     .setCo2Level(climateSensor.getCo2Level())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain climate sensor data");
+            throw new IllegalArgumentException("Событие не содержит данных о климатическом датчике.");
         }
     }
 }

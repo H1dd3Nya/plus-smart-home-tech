@@ -24,7 +24,7 @@ public class TemperatureSensorEventHandler extends SensorEventHandler<Temperatur
                     .setTemperatureF(temperatureSensor.getTemperatureF())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain temperature sensor data");
+            throw new IllegalArgumentException("Событие не содержит данных о температурном датчике.");
         }
     }
 }

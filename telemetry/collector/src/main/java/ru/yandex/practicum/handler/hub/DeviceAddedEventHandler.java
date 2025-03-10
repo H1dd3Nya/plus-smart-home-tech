@@ -25,7 +25,7 @@ public class DeviceAddedEventHandler extends HubEventHandler<DeviceAddedEventAvr
                     .setType(DeviceTypeAvro.valueOf(deviceAddedEvent.getType().name()))
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain device added data");
+            throw new IllegalArgumentException("Событие не содержит данных о добавленном устройстве.");
         }
     }
 }

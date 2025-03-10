@@ -23,7 +23,7 @@ public class DeviceRemovedEventHandler extends HubEventHandler<DeviceRemovedEven
                     .setId(deviceRemovedEvent.getId())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain device removed data");
+            throw new IllegalArgumentException("Событие не содержит данных об удалённом устройстве.");
         }
     }
 }

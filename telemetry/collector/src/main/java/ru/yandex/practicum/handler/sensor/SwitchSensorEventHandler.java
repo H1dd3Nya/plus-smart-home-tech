@@ -23,7 +23,7 @@ public class SwitchSensorEventHandler extends SensorEventHandler<SwitchSensorAvr
                     .setState(switchSensor.getState())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain switch sensor data");
+            throw new IllegalArgumentException("Событие не содержит данных о датчике переключателя.");
         }
     }
 }

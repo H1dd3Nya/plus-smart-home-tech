@@ -23,7 +23,7 @@ public class ScenarioRemovedEventHandler extends HubEventHandler<ScenarioRemoved
                     .setName(scenarioRemovedEvent.getName())
                     .build();
         } else {
-            throw new IllegalArgumentException("Event does not contain scenario removed data");
+            throw new IllegalArgumentException("Событие не содержит данных об удалённом сценарии.");
         }
     }
 }
