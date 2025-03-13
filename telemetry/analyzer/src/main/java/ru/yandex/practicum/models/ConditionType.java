@@ -1,4 +1,4 @@
-package ru.yandex.practicum.model.type;
+package ru.yandex.practicum.models;
 
 public enum ConditionType {
     MOTION,

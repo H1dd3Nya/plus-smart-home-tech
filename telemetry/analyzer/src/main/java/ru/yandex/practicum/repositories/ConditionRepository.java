@@ -1,7 +1,7 @@
-package ru.yandex.practicum.repository;
+package ru.yandex.practicum.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.yandex.practicum.model.Condition;
+import ru.yandex.practicum.models.Condition;
 
 public interface ConditionRepository extends JpaRepository<Condition, Long> {
 }

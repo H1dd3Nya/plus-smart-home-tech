@@ -1,32 +1,36 @@
-package ru.yandex.practicum.model;
+package ru.yandex.practicum.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.yandex.practicum.model.type.ConditionOperation;
-import ru.yandex.practicum.model.type.ConditionType;
 
-import java.util.List;
-
+@Getter
+@Setter
 @Entity
-@Table(name = "conditions")
-@Data
-@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Builder
+@Table(name = "conditions")
 public class Condition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ConditionType type;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ConditionOperation operation;
 
     private Integer value;
 
-    @OneToMany(mappedBy = "condition", fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scenario_id", nullable = false)
     @ToString.Exclude
-    private List<ScenarioCondition> scenarioConditions;
+    private Scenario scenario;
+
+    @Column(name = "sensor_id", nullable = false)
+    private String sensorId;
 }
