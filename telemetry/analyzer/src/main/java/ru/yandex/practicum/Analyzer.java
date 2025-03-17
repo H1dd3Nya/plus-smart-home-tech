@@ -10,10 +10,10 @@ import ru.yandex.practicum.processors.SnapshotProcessor;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class AnalyzerApp {
+public class Analyzer {
     public static void main(String[] args) {
         ConfigurableApplicationContext context =
-                SpringApplication.run(AnalyzerApp.class, args);
+                SpringApplication.run(Analyzer.class, args);
 
         final HubEventProcessor hubEventProcessor =
                 context.getBean(HubEventProcessor.class);
