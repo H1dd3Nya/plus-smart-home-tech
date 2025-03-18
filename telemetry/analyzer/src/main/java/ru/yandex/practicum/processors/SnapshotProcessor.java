@@ -45,7 +45,7 @@ public class SnapshotProcessor {
             }
         } catch (WakeupException ignored) {
         } catch (Exception e) {
-            log.error("Ошибка чтения данных из топика {}", topic);
+            log.error("Error reading data from topic {}", topic);
         } finally {
             try {
                 consumer.commitSync();
