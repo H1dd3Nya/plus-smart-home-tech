@@ -30,8 +30,6 @@ public class AggregatorStarter {
     private String snapshotsTopic;
     @Value("${topic.telemetry-sensors}")
     private String sensorsTopic;
-    @Value("${spring.kafka.consumer.poll-timeout}")
-    private int pollTimeout;
 
     public void start() {
         try {
@@ -40,7 +38,7 @@ public class AggregatorStarter {
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
             while (true) {
-                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(Duration.ofMillis(pollTimeout));
+                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(Duration.ofMillis(1000));
 
                 for (ConsumerRecord<String, SensorEventAvro> record : records) {
                     SensorEventAvro event = record.value();

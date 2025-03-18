@@ -1,7 +1,6 @@
 package ru.yandex.practicum.mapper;
 
 import com.google.protobuf.Timestamp;
-import org.springframework.stereotype.Component;
 import ru.yandex.practicum.grpc.telemetry.event.ActionTypeProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionRequest;
@@ -10,7 +9,6 @@ import ru.yandex.practicum.model.Action;
 
 import java.time.Instant;
 
-@Component
 public class ActionMapper {
 
     public DeviceActionRequest mapToActionRequest(Action action) {
