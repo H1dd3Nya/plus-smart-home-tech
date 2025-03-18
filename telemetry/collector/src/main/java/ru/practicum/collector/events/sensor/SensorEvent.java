@@ -27,11 +27,11 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public abstract class SensorEvent {
-    final Instant timestamp = Instant.now();
     @NotBlank
     String id;
     @NotBlank
     String hubId;
+    final Instant timestamp = Instant.now();
 
     @NotNull
     public abstract SensorEventType getType();
