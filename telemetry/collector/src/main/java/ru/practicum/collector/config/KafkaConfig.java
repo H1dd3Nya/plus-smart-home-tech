@@ -5,12 +5,14 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
 @Configuration
+@ConfigurationProperties("collector.kafka")
 public class KafkaConfig {
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
