@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -15,6 +16,7 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import java.util.Properties;
 
 @Configuration
+@ConfigurationProperties("aggregator.kafka")
 @RequiredArgsConstructor
 public class KafkaConfig {
     private final Environment env;
