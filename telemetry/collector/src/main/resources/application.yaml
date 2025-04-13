@@ -5,9 +5,20 @@ spring:
     import: "configserver:"
   cloud:
     config:
+      fail-fast: true
+      retry:
+        use-random-policy: true
+        max-interval: 6000
       discovery:
         enabled: true
         serviceId: config-server
+
+grpc:
+  server:
+    port: 59092
+  client:
+    hub-router:
+      address: 'discovery:///hub-router'
 
 eureka:
   client:
