@@ -8,7 +8,7 @@ import ru.yandex.practicum.interactionapi.request.NewProductInWarehouseRequest;
 
 public interface WarehouseService {
 
-    void newProductInWarehouse(NewProductInWarehouseRequest newProductInWarehouseRequest);
+    void addNewProductInWarehouse(NewProductInWarehouseRequest newProductInWarehouseRequest);
 
     BookedProductsDto checkProductQuantityEnoughForShoppingCart(ShoppingCartDto shoppingCartDto);
 

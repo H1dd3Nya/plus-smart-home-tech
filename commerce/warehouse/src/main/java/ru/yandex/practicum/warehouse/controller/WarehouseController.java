@@ -22,7 +22,7 @@ public class WarehouseController {
     @PutMapping
     public void newProductInWarehouse(@RequestBody @Valid NewProductInWarehouseRequest requestDto) {
         log.info("Добавление нового товара на склад {}", requestDto);
-        warehouseService.newProductInWarehouse(requestDto);
+        warehouseService.addNewProductInWarehouse(requestDto);
     }
 
     @PostMapping("/check")

@@ -40,7 +40,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     private final BookingRepository bookingRepository;
 
     @Override
-    public void newProductInWarehouse(NewProductInWarehouseRequest newProductInWarehouseRequest) {
+    public void addNewProductInWarehouse(NewProductInWarehouseRequest newProductInWarehouseRequest) {
         warehouseRepository.findById(newProductInWarehouseRequest.getProductId()).ifPresent(warehouse -> {
             throw new SpecifiedProductAlreadyInWarehouseException("Ошибка, товар с таким описанием уже зарегистрирован на складе.");
         });
