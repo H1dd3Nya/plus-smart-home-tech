@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @Entity
-@Table(name = "shopping_cart")
 @Getter
 @Setter
+@Builder
+@Table(name = "shopping_cart")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShoppingCart {
     @Id

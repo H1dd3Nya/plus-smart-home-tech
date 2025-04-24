@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.interactionapi.error.ErrorResponse;
+import ru.yandex.practicum.interactionapi.exception.NoSpecifiedProductInWarehouseException;
 import ru.yandex.practicum.interactionapi.exception.ProductInShoppingCartLowQuantityInWarehouseException;
 
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 @Slf4j
 @RestControllerAdvice
 public class ErrorResponseWarehouse {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleCommonException(RuntimeException e) {

@@ -8,8 +8,13 @@ import ru.yandex.practicum.interactionapi.dto.AddressDto;
 import ru.yandex.practicum.interactionapi.dto.BookedProductsDto;
 import ru.yandex.practicum.interactionapi.dto.ShoppingCartDto;
 import ru.yandex.practicum.interactionapi.request.AddProductToWarehouseRequest;
+import ru.yandex.practicum.interactionapi.request.AssemblyProductsForOrderRequest;
 import ru.yandex.practicum.interactionapi.request.NewProductInWarehouseRequest;
+import ru.yandex.practicum.interactionapi.request.ShippedToDeliveryRequest;
 import ru.yandex.practicum.warehouse.service.WarehouseService;
+
+import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -21,31 +26,89 @@ public class WarehouseController {
 
     @PutMapping
     public void newProductInWarehouse(@RequestBody @Valid NewProductInWarehouseRequest requestDto) {
-        log.info("Добавление нового товара на склад {}", requestDto);
-        warehouseService.addNewProductInWarehouse(requestDto);
+        try {
+            log.info("Добавить новый товар на склад {}", requestDto);
+            warehouseService.addNewProductInWarehouse(requestDto);
+        } catch (Exception e) {
+            log.error("Ошибка добавления нового товара на склад.");
+            throw e;
+        }
+    }
+
+    @PostMapping("/shipped")
+    public void shippedToDelivery(ShippedToDeliveryRequest deliveryRequest) {
+        try {
+            log.info("Передать товары в доставку {}", deliveryRequest);
+            warehouseService.shippedToDelivery(deliveryRequest);
+        } catch (Exception e) {
+            log.error("Ошибка передачи товаров в доставку.");
+            throw e;
+        }
+    }
+
+    @PostMapping("/return")
+    public void acceptReturn(@RequestBody Map<UUID, Long> products) {
+        try {
+            log.info("Принять возврат товаров на склад {}", products);
+            warehouseService.acceptReturn(products);
+        } catch (Exception e) {
+            log.error("Ошибка возврата товаров на склад.");
+            throw e;
+        }
     }
 
     @PostMapping("/check")
     public BookedProductsDto checkProductQuantityEnoughForShoppingCart(@RequestBody @Valid ShoppingCartDto shoppingCartDto) {
-        log.info("Проверка достаточности продуктов для данной корзины {}", shoppingCartDto);
-        return warehouseService.checkProductQuantityEnoughForShoppingCart(shoppingCartDto);
+        try {
+            log.info("Предварительно проверить что количество товаров на складе достаточно для данной корзины продуктов {}", shoppingCartDto);
+            return warehouseService.checkProductQuantityEnoughForShoppingCart(shoppingCartDto);
+        } catch (Exception e) {
+            log.error("Ошибка проверки.");
+            throw e;
+        }
+    }
+
+    @PostMapping("/assembly")
+    public BookedProductsDto assemblyProductsForOrder(@RequestBody @Valid AssemblyProductsForOrderRequest assemblyProductsForOrder) {
+        try {
+            log.info("Собрать товары к заказу для подготовки к отправке {}", assemblyProductsForOrder);
+            return warehouseService.assemblyProductsForOrder(assemblyProductsForOrder);
+        } catch (Exception e) {
+            log.error("Ошибка сборки товаров.");
+            throw e;
+        }
     }
 
     @PostMapping("/add")
     public void addProductToWarehouse(@RequestBody @Valid AddProductToWarehouseRequest requestDto) {
-        log.info("Принятие товара на склад {}", requestDto);
-        warehouseService.addProductToWarehouse(requestDto);
+        try {
+            log.info("Принять товар на склад {}", requestDto);
+            warehouseService.addProductToWarehouse(requestDto);
+        } catch (Exception e) {
+            log.error("Ошибка принятия товара на склад.");
+            throw e;
+        }
     }
 
     @GetMapping("/address")
-    public AddressDto getAddress() {
-        log.info("Получение адреса.");
-        return warehouseService.getAddress();
+    public AddressDto getWarehouseAddress() {
+        try {
+            log.info("Предоставить адрес склада для расчёта доставки.");
+            return warehouseService.getWarehouseAddress();
+        } catch (Exception e) {
+            log.error("Ошибка предоставления адреса склада.");
+            throw e;
+        }
     }
 
     @PostMapping("/booking")
     public BookedProductsDto bookingProducts(@RequestBody @Valid ShoppingCartDto shoppingCartDto) {
-        log.info("Бронирование корзины покупок {}", shoppingCartDto);
-        return warehouseService.bookingProducts(shoppingCartDto);
+        try {
+            log.info("Бронирование корзины покупок {}", shoppingCartDto);
+            return warehouseService.bookingProducts(shoppingCartDto);
+        } catch (Exception e) {
+            log.error("Ошибка бронирования корзины покупок.");
+            throw e;
+        }
     }
 }

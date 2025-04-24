@@ -3,6 +3,7 @@ package ru.yandex.practicum.interactionapi.feign;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.interactionapi.dto.BookedProductsDto;
 import ru.yandex.practicum.interactionapi.dto.ShoppingCartDto;
 import ru.yandex.practicum.interactionapi.request.ChangeProductQuantityRequest;
 
@@ -18,7 +19,6 @@ public interface ShoppingCartClient {
     @PutMapping
     ShoppingCartDto addProductToShoppingCart(@RequestParam String username,
                                              @RequestBody Map<UUID, Long> request);
-
     @DeleteMapping
     void deactivateCurrentShoppingCart(@RequestParam String username);
 
@@ -28,4 +28,7 @@ public interface ShoppingCartClient {
 
     @PostMapping("/change-quantity")
     ShoppingCartDto changeProductQuantity(@RequestParam String username, @RequestBody @Valid ChangeProductQuantityRequest requestDto);
+
+    @PostMapping("/booking")
+    BookedProductsDto bookingProductsForUser(@RequestParam String username);
 }
