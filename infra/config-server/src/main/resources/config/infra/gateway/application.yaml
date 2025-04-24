@@ -1,3 +1,6 @@
+server:
+  port: 9090
+
 spring:
   cloud:
     gateway:
@@ -5,17 +8,14 @@ spring:
       routes:
         - id: shopping_cart_service_route
           uri: lb://shopping-cart
-
           predicates:
             - Path=/shopping-cart/**
           filters:
             - PrefixPath=/api/v1
 
-        - id: shopping_cart_circuitbreaker_route
-          uri: lb://shopping-cart
+        - id: shopping_store_service_route
+          uri: lb://shopping-store
           predicates:
-            - Path=/shopping-cart/**
+            - Path=/shopping-store/**
           filters:
-            - CircuitBreaker=myCircuitBreaker
-server:
-  port: 8080
+            - PrefixPath=/api/v1
