@@ -11,9 +11,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@Table(name = "bookings")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "bookings")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Booking {
     @Id
@@ -27,4 +27,5 @@ public class Booking {
     @Column(name = "quantity")
     Map<UUID, Long> products;
     UUID orderId;
+    UUID deliveryId;
 }
